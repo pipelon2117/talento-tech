@@ -1,2 +1,1 @@
-"# talento-tech"  
 "# talento-tech" 
