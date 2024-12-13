@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es"> <!--No olvidar poner el idioma en español-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Proyecto Talento Tech</title>
+    <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico"/><!--asignamos un icono-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/> <!--se importa las librerias-->
+    <link href="htpps://fonts.googleapis.com/css?family=Lato:400,700,4009italic" rel="stylesheet" type="text/css" />
+    <link href="static/styles/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"> </script>
+
+    <link rel="stylesheet" type="text/css" herf="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"/>
+
+</head>
+<body id="page-top">
+    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#page-top" >Energía Renovable</a>
+            <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu 
+                <i class="fas fa-bars"></i> <!--icono del menu ||| -->
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item mx-0 lg-1 "><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item mx-0 lg-1 "><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#estimador">Estimador de Energia Renovable</a>
+                    </li>
+                    <li class="nav-item mx-0 lg-1 "><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#cargar">cargar Información</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <header class="masthead bg-primary text-white text-center"> 
+        <div class="container d-flex align-items-center flex-column">
+            <img class="masthead-avatar mb-5" src="static/assets/img/img3.webp"/>
+            <h1 class="masthead-heading text-uppercase mb-0">Energia Renovable</h1>
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icom" ><i class="fas fa-fan"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <p class="masthead-subheading font-weight-bold mb-0">El futuro brillante de nuestro planeta comienza con la Energia Renovable, una fuente inagotable de esperanza que ilumina el camino hacia un mundo más limpio y sostenible.</p>
+        </div>
+    </header>
+    <section class="page-section dashboard" id="dashboard">
+        <div class="container">
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0"> Dashboard</h2>
+            <div class="divider-custom">
+                <div class="divider-custom-line" ></div>
+                <div class="divider-custom-icom">
+                    <i class="fas fa-solar-panel"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-6 mb-5">
+                    <div class="dashboard-item mx-auto">
+                        <img src="data:image/png;base64,{{graph_url}}" alt="graficode barras"/>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 mb-5">
+                    <div class="dashboard-item mx-auto">
+                        <img src="data:image/png;base64,{{graph_url2}}" alt="grafico de torta"/>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 mb-5">   
+                    <div class="dashboard-item mx-auto">
+                        <img src="data:image/png;base64,{{graph_url3}}" alt="grafico de lineas"/>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 mb-5 mb-lg-0">
+                    <div class="dashboard-item mx-auto">
+                        <img src="data:image/png;base64,{{graph_url4}}" alt="grafico de area"/>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+    </section>
+    <section class="page-section bg-primary text-white mb-0" id="Estimador">
+        <div class="container">
+            <h2 class="page-section-heading text-center text-uppercase text-white">Estimador de Energia Renovable en el Consumo Electrico</h2>
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icom"><i class="fas fa-lightbulb"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <form method="POST">
+                <div class="row">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8 col-xl-7">
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="consumo_total" name="consumo_total" type="text" required />
+                                <label for="consumo_total">Consumo Total(kwh)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class= "row">
+                    <div class="row justify-center-center">
+                        <div class="col-lg-8 col-x1-7 mb-3">
+                            {% if porcentaje_renovable is not none %}
+                                <div class="resultado">
+                                    <h4><span class="badge text-bg-success"><i class="fas fa-solar-panel"></i>el porcentaje de energia renovable en tu consumo es: {{ porcentaje_renovable | round(2) }}%></span></h4>
+                                </div>
+                            {% elif error %}
+                                 <div class="error">
+                                    <h4><span class="badge text-bg-danger">{{error}}</span></h4>
+                                 </div>
+                            {% endif %}
+
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <button class="btn btn-xl btn-outline-light">
+                        <i class="fas fa-plug me-2"></i>Calcular</button>
+                </div>
+            </form>
+            <div class="text-center mt-4">
+                <img src="static/assets/img/formula.png" width="50%" />
+            </div>
+        </div>
+    </section>
+    <section class="page-section" id="cargar" >
+        <div class="container">
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">informacion sobre  energia renovable de sur america</h2>
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icom"> <i class="fas fa-plug-circle-plus"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-xl-7">
+                <table id="tabla_datos" class="display">
+                        <thead>
+                            <tr>
+                                <th>Entidad</th>
+                                <th>Codigo</th>
+                                <th>Año</th>
+                                <th>Renovable (% Energía primaria equivalete)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for fila in data %}
+                                <tr>
+                                    <td>>{{ fila[0] }}</td>
+                                    <td>>{{ fila[1] }}</td>
+                                    <td>>{{ fila[2] }}</td>
+                                    <td>>{{ fila[3] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-1g-0">
+                    <!-- ciaf -->
+                </div>
+                <div class="col-lg-4 mb-5 mb-1g-0">
+                    <h4 class="tex-uppercase mb-4"> andres felipe grajales davila
+                        <div class="col-lg-4">
+                            pereira
+                        </div>
+                    </h4>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+    <div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"> </script>
+    <script src="static/js/scripts.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#tabla_datos').DataTable();
+        });
+    </script>
+</body>
+</html>
